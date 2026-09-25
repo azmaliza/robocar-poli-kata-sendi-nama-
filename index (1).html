@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROBOCAR POLI — Misi Keselamatan Broomstown</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial,sans-serif;background:#e8f7ff;color:#1e293b}
+button{cursor:pointer;transition:transform .15s,filter .15s}button:hover{filter:brightness(.97)}button:active{transform:scale(.98)}button:disabled{opacity:.6;cursor:default}.hide{display:none!important}
+.app{max-width:1000px;margin:auto;overflow:hidden;border-radius:0 0 28px 28px;background:#e8f7ff;min-height:100vh}
+.sky{background:linear-gradient(180deg,#159de4 0%,#91dcff 55%,#d9f4ff 80%,#a4df82 80%,#65bd63 100%);position:relative;overflow:hidden;padding:24px}
+.brand{position:relative;color:#fff;font-weight:1000;text-align:center;line-height:1.05;text-shadow:0 3px #0754a0,2px 4px #0754a0,-2px 4px #0754a0}.gold{color:#ffe21c!important;text-shadow:0 3px #b87900,2px 4px #0754a0,-2px 4px #0754a0!important}
+.tag{display:inline-block;border:2px solid white;border-radius:99px;background:#ffdf31;color:#164d8d;padding:8px 15px;font-weight:900;box-shadow:0 3px #d9a000}
+.welcome,.card{background:white;border:3px solid #a8ddff;border-radius:25px;box-shadow:0 6px #9bcfe9;padding:20px}
+.mainbtn{background:linear-gradient(#ffeb55,#ffc627);border:3px solid white;box-shadow:0 4px #d59b0a;color:#174b91;border-radius:20px;padding:14px 12px;font-weight:1000}
+.subbtn{background:linear-gradient(#f4fbff,#c9eaff);border:2px solid #8ed0ff;box-shadow:0 3px #b2d8ee;color:#0759a7;border-radius:18px;padding:13px 12px;font-weight:950}
+.stat{background:white;border-radius:99px;padding:8px 14px;display:inline-flex;align-items:center;gap:7px;color:#0759a7;font-size:14px;font-weight:950}
+.content{padding:20px;display:grid;gap:16px}.map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}@media(min-width:600px){.map{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.spot{border:2px solid #b5ddfa;background:#e8f7ff;color:#075985;border-radius:13px;padding:10px 5px;text-align:center;font-size:12px;font-weight:850}.spot.current{background:#087fc4;color:white;border-color:#ffdf31;box-shadow:0 2px #075985}.spot.done{background:#dcfce7;border-color:#86dba0;color:#166534}
+.option{display:block;width:100%;text-align:left;border:2px solid #bcd9ef;background:white;border-radius:13px;padding:13px;margin-top:9px;font-weight:850;color:#17416f;font-size:16px}.option.correct{background:#dcfce7;border-color:#22a65a;color:#166534}.option.wrong{background:#fee2e2;border-color:#ef4444;color:#991b1b}
+.note{background:#fff8dc;border:1px solid #f4d35e;border-radius:13px;padding:13px;font-size:14px}.progress{height:10px;background:#dbeafe;border-radius:99px;overflow:hidden}.progress div{height:100%;background:linear-gradient(90deg,#22c55e,#a3e635);transition:width .25s}.feedback{padding:12px;border-radius:12px;margin-top:12px;font-size:14px;font-weight:750}
+.finish{background:linear-gradient(140deg,#fff4bd,#fff,#d9fce5);text-align:center;border:3px solid #ffda4a;border-radius:25px;padding:25px 16px}
+.bounce{animation:bob 1.5s ease-in-out infinite}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+h1,h2,h3,p{margin-top:0}footer{text-align:center;padding:16px;font-size:12px;font-weight:800;color:#0873b7}
+@media(max-width:520px){.sky{padding:18px 12px}.content{padding:12px}.card{padding:15px}.brand.title{font-size:36px!important}.town{font-size:38px!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<section id="home" class="sky">
+<div style="position:relative;z-index:1;text-align:center">
+<div class="bounce" style="font-size:58px">🚁</div>
+<div class="brand title" style="font-size:clamp(34px,7vw,58px)">ROBOCAR POLI</div>
+<div class="brand" style="font-size:clamp(21px,4vw,36px);margin-top:14px">MISI KESELAMATAN</div>
+<div class="brand gold" style="font-size:clamp(38px,8vw,66px);margin-top:8px">BROOMSTOWN</div>
+<div style="margin:18px"><span class="tag">Kata Sendi Nama • Tahun 4 • Edisi 10 Minit</span></div>
+<div class="town" style="font-size:clamp(40px,8vw,75px)">🏙️ 🚓 🚒 🚑</div>
+<div class="welcome" style="max-width:760px;margin:15px auto">
+<div style="background:#ffdf31;border-radius:14px;color:#123f77;font-weight:1000;font-size:clamp(20px,4vw,28px);padding:14px">Selamat datang, Wira! 🌟</div>
+<p style="line-height:1.6;margin:15px 0 8px">Terokai Broomstown bersama Poli dan rakan-rakan. Jawab soalan kata sendi nama dan kumpulkan bintang!</p>
+<b style="color:#0759a7">Setiap stesen mempunyai SATU soalan sahaja.</b>
+<div style="font-size:40px;margin-top:12px">🚓　🚒　🚁　🚑</div>
+</div>
+<div style="display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:18px"><span class="stat">⭐ <span id="topstars">0</span>/10</span><span class="stat">🏆 <span id="toptrophy">0</span></span><span class="stat">🎯 <span id="topscore">0</span> mata</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:800px;margin:auto">
+<button class="mainbtn" id="start">▶ MULA MISI</button><button class="subbtn" id="notebtn">📖 NOTA</button><button class="subbtn" id="guidebtn">❔ PANDUAN</button>
+</div>
+</div>
+</section>
+<main class="content">
+<section id="notepanel" class="card hide">
+<h2 style="color:#0759a7">📖 Nota Kata Sendi Nama</h2>
+<div class="map" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+<div class="note"><b>di</b> — tempat: di balai polis</div><div class="note"><b>ke</b> — arah/tempat dituju: ke sekolah</div><div class="note"><b>dari</b> — tempat asal: dari rumah</div><div class="note"><b>daripada</b> — sumber/orang: daripada guru</div><div class="note"><b>kepada</b> — sasaran orang: kepada doktor</div><div class="note"><b>pada</b> — masa: pada pukul lapan</div><div class="note"><b>untuk</b> — tujuan: untuk keselamatan</div><div class="note"><b>dengan</b> — cara/bersama: dengan Poli</div><div class="note"><b>oleh</b> — pelaku: diselamatkan oleh Poli</div><div class="note"><b>tentang</b> — perkara: tentang keselamatan</div>
+</div><button class="subbtn" id="closenote" style="margin-top:14px">TUTUP ✕</button>
+</section>
+<section id="guidepanel" class="card hide">
+<h2 style="color:#0759a7">❔ Panduan Permainan</h2><ul style="line-height:1.8"><li>Terokai 10 stesen keselamatan Broomstown.</li><li>Jawapan betul percubaan pertama: 10 mata. Percubaan kedua: 5 mata.</li><li>Jika salah kali pertama, mentol 💡 akan muncul dengan petunjuk.</li><li>Setiap stesen hanya memberikan mata sekali. Skor dikunci selepas misi terakhir.</li><li>Di akhir permainan, pilih SELESAI atau MAIN SEMULA.</li></ul><button class="subbtn" id="closeguide">TUTUP ✕</button>
+</section>
+<section id="game" class="hide">
+<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px">
+<div><div style="font-size:12px;font-weight:900;color:#64748b">SKOR TERKUMPUL</div><div style="font-size:32px;font-weight:1000;color:#0759a7"><span id="score">0</span><span style="font-size:14px"> / 100</span></div></div>
+<div style="text-align:right"><div style="font-size:12px;font-weight:900;color:#64748b">STESEN</div><div style="font-size:22px;font-weight:1000;color:#0759a7"><span id="num">1</span> / 10</div></div>
+</div>
+<div class="progress" style="margin-bottom:14px"><div id="progress" style="width:0%"></div></div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px"><div><div style="font-size:12px;font-weight:900;color:#0873b7">🗺️ PETA BROOMSTOWN</div><h2 id="stationtitle" style="margin:6px 0 0;color:#0759a7">Balai Polis</h2></div><div id="stationicon" class="bounce" style="font-size:48px">🚓</div></div>
+<div id="map" class="map" style="margin-bottom:18px"></div>
+<div style="background:#effaff;border-radius:18px;padding:17px">
+<div style="font-size:12px;font-weight:1000;color:#0873b7;margin-bottom:8px">SOALAN MISI</div><p id="question" style="font-size:18px;font-weight:850;line-height:1.55"></p>
+<div id="options"></div><div id="feedback" class="hide feedback"></div>
+<div id="hintarea" class="hide" style="margin-top:15px">
+<div style="display:flex;align-items:center;gap:12px;background:#fff1bd;border-radius:15px;padding:12px"><span class="bounce" style="font-size:38px">💡</span><div><b style="color:#92400e">Mentol Petunjuk!</b><p style="margin:4px 0 0;font-size:14px;color:#92400e">Poli ada petunjuk untuk membantu kamu.</p></div></div>
+<div id="hintreveal" class="hide note" style="margin-top:10px"></div><button id="hintbtn" class="mainbtn" style="width:100%;margin-top:10px">💡 LIHAT PETUNJUK</button>
+</div>
+<button id="next" class="mainbtn hide" style="width:100%;margin-top:16px">SETERUSNYA ➜</button>
+</div></div>
+</section>
+<section id="finish" class="finish hide">
+<div style="font-size:32px">🎉 ✨ 🎊</div><div class="bounce" style="font-size:100px">🏆</div>
+<h2 style="font-size:clamp(24px,5vw,34px);font-weight:1000;color:#166534">TAHNIAH, WIRA BROOMSTOWN!</h2><p style="font-weight:800;color:#166534">Semua misi keselamatan berjaya diselesaikan!</p>
+<div style="background:white;border-radius:20px;padding:22px;margin-top:20px"><div style="font-size:13px;font-weight:1000;color:#64748b">JUMLAH SKOR TERKUMPUL</div><div style="font-size:54px;font-weight:1000;color:#0759a7;margin-top:8px"><span id="finalscore">0</span><span style="font-size:18px"> / 100</span></div><p id="praise" style="font-size:14px;font-weight:800;color:#64748b"></p></div>
+<div style="font-size:42px;margin-top:18px">🚓 🚒 🚁 🚑</div><p style="font-weight:800;color:#166534;margin:15px 0 22px">Syabas, wira! Teruskan mengutamakan keselamatan.</p>
+<div style="display:grid;gap:12px;justify-items:center"><button id="done" class="mainbtn" style="width:100%;max-width:290px">✓ SELESAI</button><button id="replay" class="subbtn" style="width:100%;max-width:290px">↻ MAIN SEMULA</button></div>
+</section>
+<section id="closed" class="card hide" style="text-align:center"><div style="font-size:52px">👏</div><h2 style="color:#166534">Terima kasih, Wira Broomstown!</h2><p>Misi selesai. Skor akhir: <b id="closedscore">0</b> / 100 mata.</p><button id="replay2" class="subbtn" style="width:100%;margin-top:12px">↻ MAIN SEMULA</button></section>
+</main>
+<footer>🚓 ROBOCAR POLI • BROOMSTOWN • BELAJAR SAMBIL MENEROKA 🚒</footer>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const data=[
+['Balai Polis','🚓','Poli sedang bertugas ___ balai polis.',['di','ke','dari'],0,'Fikirkan kata sendi nama yang menunjukkan tempat sesuatu berada.','di menunjukkan tempat. Contohnya, di balai polis.'],
+['Balai Bomba','🚒','Pasukan bomba bergerak ___ tempat kebakaran.',['daripada','ke','pada'],1,'Pasukan bomba sedang menuju ke suatu tempat.','ke menunjukkan arah atau destinasi.'],
+['Hospital Broomstown','🚑','Ambulans membawa pesakit ___ doktor.',['kepada','dari','tentang'],0,'Doktor ialah orang yang menerima pesakit.','kepada digunakan untuk menunjukkan sasaran orang.'],
+['Sekolah Broomstown','🏫','Murid menerima nasihat keselamatan ___ guru.',['di','kepada','daripada'],2,'Guru ialah sumber nasihat tersebut.','daripada menunjukkan sumber atau asal sesuatu.'],
+['Taman Bandar','🌳','Latihan keselamatan bermula ___ pukul lapan pagi.',['pada','ke','oleh'],0,'Kata sendi nama ini digunakan sebelum waktu.','pada digunakan untuk menunjukkan masa.'],
+['Lintasan Pejalan Kaki','🚸','Murid melintas jalan ___ berhati-hati.',['tentang','dengan','daripada'],1,'Fikirkan cara murid melintas jalan.','dengan menunjukkan cara atau keadaan.'],
+['Menara Kawalan','🚁','Helikopter terbang ___ lapangan terbang.',['dari','kepada','untuk'],0,'Lapangan terbang ialah tempat helikopter bermula.','dari menunjukkan tempat atau arah asal.'],
+['Pusat Keselamatan','🛡️','Topi keledar dipakai ___ melindungi kepala.',['oleh','untuk','di'],1,'Fikirkan tujuan topi keledar dipakai.','untuk menunjukkan tujuan atau kegunaan.'],
+['Pusat Latihan','📋','Mangsa itu diselamatkan ___ anggota bomba.',['oleh','pada','ke'],0,'Anggota bomba ialah orang yang melakukan tindakan menyelamat.','oleh menunjukkan pelaku dalam ayat pasif.'],
+['Dataran Broomstown','🏆','Poli memberikan taklimat ___ keselamatan jalan raya.',['dari','kepada','tentang'],2,'Keselamatan jalan raya ialah perkara yang dibincangkan.','tentang menunjukkan perkara yang diperkatakan.']
+];
+let score=0,idx=0,attempt=0,locked=false,finished=false,earned=Array(10).fill(false),hintUsed=false;
+function stats(){$('topstars').textContent=earned.filter(Boolean).length;$('toptrophy').textContent=finished?1:0;$('topscore').textContent=score}
+function renderMap(){$('map').innerHTML=data.map((s,i)=>`<div class="spot ${i===idx?'current':earned[i]?'done':''}">${earned[i]?'⭐ ':''}${i+1}. ${s[1]}<br>${s[0]}</div>`).join('')}
+function render(){
+if(finished)return;attempt=0;locked=false;hintUsed=false;const s=data[idx];
+$('num').textContent=idx+1;$('stationtitle').textContent=s[0];$('stationicon').textContent=s[1];$('question').textContent=s[2];$('progress').style.width=(idx*10)+'%';$('options').innerHTML='';
+s[3].forEach((o,i)=>{const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+o;b.onclick=()=>answer(i,b);$('options').appendChild(b)});
+$('feedback').classList.add('hide');$('hintarea').classList.add('hide');$('hintreveal').classList.add('hide');$('hintbtn').classList.remove('hide');$('hintbtn').disabled=false;$('next').classList.add('hide');renderMap();stats()
+}
+function answer(n,b){
+if(finished||locked||earned[idx])return;const s=data[idx],buttons=$('options').querySelectorAll('button');
+if(n===s[4]){
+locked=true;earned[idx]=true;const pts=attempt===0?10:5;score+=pts;$('score').textContent=score;buttons.forEach(x=>x.disabled=true);b.classList.add('correct');
+$('feedback').className='feedback';$('feedback').style.background='#dcfce7';$('feedback').style.color='#166534';$('feedback').textContent='🎉 Betul! +'+pts+' mata. Syabas, wira!';
+$('next').classList.remove('hide');$('next').textContent=idx===9?'LIHAT KEPUTUSAN 🏆':'SETERUSNYA ➜';renderMap();stats()
+}else{
+attempt++;b.classList.add('wrong');b.disabled=true;
+if(attempt===1){
+$('feedback').className='feedback';$('feedback').style.background='#fef3c7';$('feedback').style.color='#92400e';$('feedback').textContent='Belum tepat! Cuba sekali lagi. Mentol petunjuk telah muncul.';
+$('hintarea').classList.remove('hide')
+}else{
+locked=true;earned[idx]=true;buttons.forEach(x=>x.disabled=true);buttons[s[4]].classList.add('correct');
+$('feedback').className='feedback';$('feedback').style.background='#e0f2fe';$('feedback').style.color='#075985';$('feedback').textContent='Jawapan yang betul ialah “'+s[3][s[4]]+'”. '+s[6]+' Mata bagi stesen ini: 0.';
+$('hintarea').classList.add('hide');$('next').classList.remove('hide');$('next').textContent=idx===9?'LIHAT KEPUTUSAN 🏆':'SETERUSNYA ➜';renderMap();stats()
+}}
+}
+function finish(){
+if(finished||idx!==9||!locked||!earned[9])return;finished=true;$('progress').style.width='100%';$('finalscore').textContent=score;
+$('praise').textContent=score===100?'Cemerlang! Semua jawapan betul pada percubaan pertama.':score>=70?'Hebat! Anda berjaya mengumpul banyak mata.':score>=40?'Syabas! Teruskan berlatih kata sendi nama.':'Terima kasih kerana mencuba. Teruskan belajar dan cuba lagi.';
+$('game').classList.add('hide');$('finish').classList.remove('hide');stats()
+}
+function reset(){score=0;idx=0;attempt=0;locked=false;finished=false;earned=Array(10).fill(false);hintUsed=false;['game','finish','closed','notepanel','guidepanel'].forEach(x=>$(x).classList.add('hide'));$('home').classList.remove('hide');$('score').textContent='0';$('progress').style.width='0%';stats()}
+$('start').onclick=()=>{$('home').classList.add('hide');$('notepanel').classList.add('hide');$('guidepanel').classList.add('hide');$('game').classList.remove('hide');render()};
+$('notebtn').onclick=()=>{$('notepanel').classList.toggle('hide');$('guidepanel').classList.add('hide')};$('guidebtn').onclick=()=>{$('guidepanel').classList.toggle('hide');$('notepanel').classList.add('hide')};
+$('closenote').onclick=()=>$('notepanel').classList.add('hide');$('closeguide').onclick=()=>$('guidepanel').classList.add('hide');
+$('hintbtn').onclick=()=>{if(finished||locked||attempt===0||hintUsed)return;hintUsed=true;$('hintreveal').textContent='💡 '+data[idx][6];$('hintreveal').classList.remove('hide');$('hintbtn').classList.add('hide')};
+$('next').onclick=()=>{if(finished||!locked||!earned[idx])return;if(idx===9){finish();return}idx++;render()};
+$('done').onclick=()=>{if(!finished)return;$('finish').classList.add('hide');$('closed').classList.remove('hide');$('closedscore').textContent=score};
+$('replay').onclick=reset;$('replay2').onclick=reset;stats()
+})();
+</script>
+</body>
+</html>
